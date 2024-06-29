@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fact0rn Dashboard DEMO</title>
+    <style>
+        /* GoogleFont */
+        @import url('https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&display=swap');
+    </style>
+        <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <!-- Custom CSS -->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/rootPage.css') }}">
+        <!-- jQuery -->
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery-3.7.1.min.js') }}"></script>
+        <!-- BootStrapJS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <p id="ip_addr" style="display: none;">{{ip_addr}}</p>
+    <p id="web_port" style="display: none;">{{web_port}}</p>
+    <div class="loadingPanel">
+        <div class="loadingMSG">
+            <div class="loadingANI"></div><br>
+            Fact0rnDashboard Loading
+        </div>
+    </div>
+    <div class="errorPanel" style="display: none;">
+        <div class="errorMSGName">
+            Fact0rnDashboard Error
+        </div>
+        <div id="errMsg">error</div>
+    </div>
+    <div class="staticArea">
+        <header>
+            <p class="header_name">Fact0rnDashboard</p>
+            <div class="staticIcons">
+<!--                <ion-icon name="alert-circle-outline" class="staticIcon"></ion-icon>-->
+<!--                <ion-icon name="arrow-redo-outline" class="staticIcon"></ion-icon>-->
+<!--                <ion-icon name="moon-outline" class="staticIcon"></ion-icon>-->
+                <ion-icon name="cog-outline" class="staticIcon" onclick="changeSelect('set')"></ion-icon>
+            </div>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#" class="navSelect" id="nav_home" onclick="changeSelect('home')">Home</a></li>
+                <li><a href="#" id="nav_farms" onclick="changeSelect('farms')">Farms</a></li>
+                <li><a href="#" id="nav_logs" onclick="changeSelect('logs')">Logs</a></li>
+                <!-- <li><a href="#">NavLi333</a></li>
+                <li><a href="#">NavLi444</a></li>
+                <li><a href="#">NavLi555</a></li>
+                <li><a href="#">NavLi666</a></li> -->
+            </ul>
+        </nav>
+    </div>
+    <div class="webContent" id="homeContent">
+        <div class="contentContainer">
+            <p class="contentName">
+                <ion-icon name="cloud-outline" class="contentIcon"></ion-icon>
+                Machines
+            </p>
+            <p class="countValue" id="countValue">NaN</p>
+        </div>
+        <div class="contentContainer">
+            <p class="contentName">
+                <ion-icon name="cloud-offline-outline" class="contentIcon"></ion-icon>
+                Dead machines
+            </p>
+            <p class="countValue deadCount" id="deadcountValue">NaN</p>
+            <div class="deadArea">
+                <ul id="deadList" class="deadList_ul">
+                </ul>
+            </div>
+        </div>
+        <div class="contentContainer">
+            <p class="contentName">
+                <ion-icon name="code-working-outline" class="contentIcon"></ion-icon>
+                CurrentBlock / OverTime
+            </p>
+            <p class="countValue" id="blockInfo">NaN</p>
+        </div>
+        <div class="contentContainer">
+            <p class="contentName">
+                <ion-icon name="flash-outline" class="contentIcon"></ion-icon>
+                EventInfo
+            </p>
+            <nav>
+                <ul>
+                    <li><a href="#" class="navSelect" id="nav_tfb" onclick="countsTabChangeSelect('tfb')">FindBlock</a></li>
+                    <li><a href="#" id="nav_ts" onclick="countsTabChangeSelect('ts')">FACT Success</a></li>
+                </ul>
+            </nav>
+            <div class="contentBlock" id="tfbContent">
+                <p class="countValue" id="raceSuccess"><div class="loadingANI" id="eventInfoLoading"></div></p>
+                <p class="countValue time" id="raceLost">Loading</p>
+                <div class="dropdown">
+                    <button class="btn termBtn btn-sm btn-secondary dropdown-toggle" id="tfbContentTermBTN" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Total
+                    </button>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="changeDropDown('tfbContentTermBTN','Total')">Total</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeDropDown('tfbContentTermBTN','1 day')">1 day</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeDropDown('tfbContentTermBTN','7 days')">7 days</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeDropDown('tfbContentTermBTN','One month')">One month</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="contentBlock" id="tsContent" style="display: none;">
+                <p class="countValue" id="tsCount">SuccessCount</p>
+                <p class="countValue time" id="tsTime">Success AVG Time</p>
+                <div class="dropdown">
+                    <button class="btn termBtn btn-sm btn-secondary dropdown-toggle" id="tsContentTermBTN" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Total
+                    </button>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="changeDropDown('tsContentTermBTN','Total')">Total</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeDropDown('tsContentTermBTN','1 day')">1 day</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeDropDown('tsContentTermBTN','7 days')">7 days</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeDropDown('tsContentTermBTN','One month')">One month</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="contentContainer chartContainer">
+            <p class="contentName">
+                <ion-icon name="analytics-outline" class="contentIcon"></ion-icon>
+                Acquire blocks
+            </p>
+            <div id="raceWinMachinesChartLoadgin" style="text-align: center; margin-top: 20px;">
+                <div class="loadingANI" ></div>
+            </div>
+            <div id="raceWinMachinesChartArea">
+                <canvas id="raceWinMachinesChart"></canvas>
+            </div>
+            <div class="dropdown" id="raceWinMachinesDropDown">
+                <button class="btn termBtn btn-sm btn-secondary dropdown-toggle" id="raceWinMachinesTermBTN" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Total
+                </button>
+                    <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" onclick="changeDropDown('raceWinMachinesTermBTN','Total')">Total</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeDropDown('raceWinMachinesTermBTN','1 day')">1 day</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeDropDown('raceWinMachinesTermBTN','7 days')">7 days</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeDropDown('raceWinMachinesTermBTN','One month')">One month</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="webContent" id="setContent" style="display: none;">
+        <div class="contentContainer">
+            <p class="contentName">
+                <ion-icon name="code-download-outline" class="contentIcon"></ion-icon>
+                Version
+            </p>
+            <p class="countValue" id="deadcountValue">2.0</p>
+        </div>
+        <div class="contentContainer">
+            <p class="contentName">
+                <ion-icon name="git-branch-outline" class="contentIcon"></ion-icon>
+                LastUpdate
+            </p>
+            <p class="countValue" id="deadcountValue">20240626 23</p>
+        </div>
+    </div>
+
+    <div class="webContent" id="farmsContent" style="display: none;">
+        <!-- <div class="contentContainer">
+            <p class="contentName">
+                <ion-icon name="code-download-outline" class="contentIcon"></ion-icon>
+                farm
+            </p>
+            <div class="contentContainer">
+                <p class="contentName">
+                    <ion-icon name="code-download-outline" class="contentIcon"></ion-icon>
+                    Version
+                </p>
+                <p class="countValue" id="deadcountValue">DEMO 0.4</p>
+            </div>
+        </div> -->
+    </div>
+    <div class="webContent" id="logsContent" style="display: none;">
+        <div class="contentContainer" id="logContent">
+            <p class="contentName">
+                <ion-icon name="pulse-outline" class="contentIcon"></ion-icon>
+                Logs
+            </p>
+            <div id="logLoading" style="text-align: center; margin-top: 20px;">
+                <div class="loadingANI" ></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<!-- IONICONS -->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="{{ url_for('static',filename='js/rootPage.js') }}"></script>
+<!-- ChartJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</html>

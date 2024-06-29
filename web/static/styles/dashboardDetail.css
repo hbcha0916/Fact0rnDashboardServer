@@ -1,0 +1,318 @@
+html{
+    font-family: "Reddit Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    color: black;
+}
+
+.loadingPanel{
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+    background-color: white;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.errorPanel{
+    padding-left: 10px;
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+    background-color: white;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.hidden{
+    opacity: 0;
+    z-index: -100;
+}
+
+.loadingMSG{
+    position: fixed;
+    font-size: 2em;
+    padding: 0;
+    margin: 0;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.errorMSGName{
+
+    font-size: 2em;
+
+}
+
+.loadingANI{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(0,0,0,.3);
+    border-radius: 50%;
+    border-top-color: #000;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+  @-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+
+
+
+:root{
+    --body-padding: 0 8% 0 8%;
+    --body-margin: 0;
+
+    --header-margin: 30px 0 0 0;
+    --header-name-size: 30px;
+    --header-name-padding: 0 50px 0 0;
+    --static-icon-wh: calc(var(--header-name-size) - 3px);
+    --static-icons-padding: 7px 0 0 0 ;
+
+    --nav-padding: 0 10px 0 10px;
+
+    --web-content-grid: repeat(3, 1fr);
+    --web-content-gap: 20px 30px;
+    --chart-container: span 2;
+
+    --web-content-resources-grid: repeat(4, 1fr);
+
+    --tcup-size: 20px;
+}
+
+@media (max-width: 1100px){
+    :root{
+        --web-content-grid: repeat(2, 1fr);
+        --chart-container: span 2;
+        --web-content-resources-grid: repeat(2, 1fr);
+        --tcup-size: 16px;
+    }
+}
+
+@media (max-width: 700px){
+    :root{
+        --body-padding: 0 6% 0 6%;
+        --body-margin: 0;
+
+        --header-margin: 20px 0 0 0;
+        --header-name-size: 18px;
+        --header-name-padding: 0 20px 0 0;
+        --static-icon-wh: var(--header-name-size);
+        --static-icons-padding: 1px 0 0 0 ;
+        --static-icon-margin: 0 2.5px 0 2.5px;
+
+        --nav-padding: 0 8px 0 8px;
+
+        --web-content-grid: repeat(1, 1fr);
+        --web-content-gap: 15px 30px;
+        --chart-container: span 1;
+        --web-content-resources-grid: repeat(1, 1fr);
+        --tcup-size: 15px;
+    }
+}
+
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.webContent{
+    padding: var(--body-padding);
+    margin: var(--body-margin);
+    display: grid;
+    grid-template-columns: var(--web-content-grid);
+    grid-auto-flow: dense;
+    gap: var(--web-content-gap);
+}
+
+#resourcesContent{
+    grid-template-columns: var(--web-content-resources-grid);
+}
+
+.chartContainer{
+    grid-column-end: var(--chart-container);
+}
+
+#farmsContent{
+    grid-template-columns: repeat(1, 1fr);
+}
+
+#raceWinMachinesDropDown{
+    text-align: center;
+}
+
+.staticArea{
+    position: fixed;
+    top: 0;
+    width: 90%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #fff;
+    z-index: 100;
+}
+
+header{
+    border-bottom: 2px solid black;
+    width: 100%;
+    display: flex;
+    padding: var(--header-margin);
+}
+
+.header_name{
+    margin: 0;
+    padding: var(--header-name-padding);
+    font-size: var(--header-name-size);
+}
+
+.staticIcons{
+    margin-left: auto;
+    padding: var(--static-icons-padding);
+}
+
+.staticIcon{
+    width: var(--static-icon-wh);
+    height: var(--static-icon-wh);
+    margin: var(--static-icon-margin);
+}
+
+nav{
+    /* border: 1px solid red; */
+}
+
+nav a{
+    text-decoration-line: none;
+    color: black;
+}
+
+nav ul {
+    list-style: none; /* 기본 목록 마커 제거 */
+    padding: 0;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+nav li:hover{
+    border-bottom: 1px solid black;
+
+}
+
+nav ul li {
+    display: inline; /* 항목을 가로로 배치 */
+    padding: var(--nav-padding);
+    /* border: 1px solid red; */
+}
+
+.deadArea{
+    text-align: center;
+}
+
+.deadList_ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    column-count: 2;
+    column-gap: 0;
+}
+
+.deadList_ul a{
+    text-decoration-line: none;
+    color: initial;
+}
+
+.navSelect{
+    font-weight: bold;
+}
+
+.contentContainer{
+    /* border: 1px solid red; */
+    padding: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.contentContainer:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
+}
+
+.contentName{
+    font-size: 20px;
+    margin: 0;
+    border-bottom: 1.5px solid black;
+}
+
+.contentIcon{
+    font-size: 15px;
+}
+
+.countValue{
+    font-size: 35px;
+    text-align: center;
+    margin: 10px 0 0 0;
+    padding: 0;
+}
+
+.time{
+    font-size: 20px;
+    text-align: center;
+    margin: 0 0 0 0;
+}
+
+#blockInfo{
+    font-size: 20px;
+    margin: 18px 0 0 0;
+}
+
+.cpuVal,.cf,.bnm{
+    font-size: var(--tcup-size);
+    margin: 18px 0 0 0;
+}
+
+.termBtn{
+    margin: 18px 0 0 0;
+}
+
+.deadCount{
+    color: red;
+}
+
+.btnNode{
+    border: none;
+    border-radius: 10px;
+    /* border: 1px solid rgb(255, 0, 0); */
+    background-color: greenyellow;
+    /* background-color: red; */
+    padding: 10px;
+    margin: 3px;
+    font-family: initial;
+
+}
+
+.btnNode:hover{
+    filter: brightness(0.6);
+}
+
+.btnNode:active{
+    filter: brightness(0.4);
+}
+
+.contentBlock{
+    margin-top: 10px;
+    text-align: center;
+}
